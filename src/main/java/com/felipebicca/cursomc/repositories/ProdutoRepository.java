@@ -20,5 +20,5 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 
 	//Esse método substitui a query acima.
 	@Transactional(readOnly=true)
-	Page<Produto> findDistinctByNomeContainingAndCategoriasIn(List<Categoria> categorias, Pageable pageRequest);
+	Page<Produto> findDistinctByNomeContainingAndCategoriasIn(String nome, List<Categoria> categorias, Pageable pageRequest);
 }
