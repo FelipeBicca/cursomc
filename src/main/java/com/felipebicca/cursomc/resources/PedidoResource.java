@@ -21,7 +21,5 @@ public class PedidoResource {
 	public ResponseEntity<Pedido> find(@PathVariable Integer id) {
 		Pedido obj = pedido.find(id);
 		return ResponseEntity.ok().body(obj);
-	
-
 	}
 }
