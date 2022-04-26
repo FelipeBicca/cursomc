@@ -3,28 +3,38 @@ package com.felipebicca.cursomc.config;
 import java.text.ParseException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.felipebicca.cursomc.services.DBService;
 import com.felipebicca.cursomc.services.EmailService;
-import com.felipebicca.cursomc.services.MockMailService;
+import com.felipebicca.cursomc.services.SmtpMailService;
 
 @Configuration
-@Profile("test")
-public class TesteConfig {
+@Profile("dev")
+public class DevConfig {
+
 	@Autowired
 	private DBService dbService;
-	
+
+	@Value("${spring.jpa.hibernate.ddl-auto}")
+	private String strategy;
+
 	@Bean
-	public Boolean instantiateDatabase() throws ParseException {	
-		dbService.instantiateTestDatabase();
-		return true;
+	public boolean instantiateDatabase() throws ParseException {
+
+		if (!"create".equals(strategy)) {
+			return false;
+		}else {
+			dbService.instantiateTestDatabase();
+			return true;
+		}
 	}
-	
+
 	@Bean
 	public EmailService emailService() {
-		return new MockMailService();
+		return new SmtpMailService();
 	}
 }
