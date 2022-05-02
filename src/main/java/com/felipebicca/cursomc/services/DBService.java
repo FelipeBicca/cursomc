@@ -96,7 +96,7 @@ public class DBService {
 		Cidade c3 = new Cidade(null, "Campinas", est2);
 
 		Cliente cli1 = new Cliente(null, "Maria Silva", "felipedbicca@hotmail.com", "36378912377", TipoCliente.PESSOAFISICA, bCryptPasswordEncoder.encode("12345"));
-		Cliente cli2 = new Cliente(null, "Ana Costa", "felipedbicca@hotmail.com", "59435148050", TipoCliente.PESSOAFISICA, bCryptPasswordEncoder.encode("12345"));
+		Cliente cli2 = new Cliente(null, "Ana Costa", "felipebicca@gmail.com", "59435148050", TipoCliente.PESSOAFISICA, bCryptPasswordEncoder.encode("12345"));
 		
 		cli2.addPerfil(Perfil.ADMIN);
 		
