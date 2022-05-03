@@ -5,9 +5,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.felipebicca.cursomc.domain.Cliente;
 import com.felipebicca.cursomc.domain.ItemPedido;
 import com.felipebicca.cursomc.domain.PagamentoComBoleto;
 import com.felipebicca.cursomc.domain.Pedido;
@@ -15,6 +19,8 @@ import com.felipebicca.cursomc.domain.enums.EstadoPagamento;
 import com.felipebicca.cursomc.repositories.ItemPedidoRepository;
 import com.felipebicca.cursomc.repositories.PagamentoRepository;
 import com.felipebicca.cursomc.repositories.PedidoRepository;
+import com.felipebicca.cursomc.security.UserSS;
+import com.felipebicca.cursomc.services.exception.AuthorizationException;
 import com.felipebicca.cursomc.services.exception.ObjectNotFoundException;
 
 @Service
@@ -37,13 +43,13 @@ public class PedidoService {
 
 	@Autowired
 	private ClienteService clienteService;
-	
+
 	@Autowired
 	private EmailService emailService;
 
-	//@Autowired
-	//private EmailService emailService;
-	
+	// @Autowired
+	// private EmailService emailService;
+
 	public List<Pedido> findAll() {
 		return repo.findAll();
 	}
@@ -74,23 +80,19 @@ public class PedidoService {
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
-		//System.out.println(obj);
-		//emailService.sendOrderConfirmationEmail(obj);
+		// System.out.println(obj);
+		// emailService.sendOrderConfirmationEmail(obj);
 		emailService.sendOrderConfirmationHTMLEmail(obj);
 		return obj;
 	}
 
-	/*
 	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
-		
 		UserSS user = UserService.authenticated();
 		if (user == null) {
 			throw new AuthorizationException("Acesso negado");
 		}
-		
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		Cliente cliente = clienteService.find(user.getId());
 		return repo.findByCliente(cliente, pageRequest);
 	}
-*/
 }
