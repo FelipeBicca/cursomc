@@ -57,4 +57,5 @@ public class PedidoResource {
 		Page<Pedido> list = pedidoService.findPage(page, linesPerPage, orderBy, direction);
 		return ResponseEntity.ok().body(list);
 	}
+	//Anotacao
 }
